@@ -1,13 +1,16 @@
 #from doctest import debug
 
-from flask import Flask, render_template
+from flask import render_template
+import dao
+from saleapp.app import app
 
-app=Flask(__name__)
 
 @app.route("/")
 
 def index():
-    return render_template("index.html")
+    cates=dao.load_categories()
+    prods=dao.load_products()
+    return render_template("index.html",categories=cates,products=prods)
 
 if __name__=="__main__":
     app.run(debug=True)
