@@ -1,9 +1,9 @@
 # from doctest import debug
 import math
 
-from flask import render_template, request
+from flask import render_template, request, redirect
 import dao
-from saleapp.app import app
+from app import app
 
 
 @app.route("/")
@@ -21,10 +21,27 @@ def index():
     return render_template("index.html", categories=cates, products=prods, pages=math.ceil(total / page_size))
 
 
-@app.route("/register")
+@app.route("/register", methods=['get', 'post'])
 def register_view():
-    return render_template('layout/register.html')
+    err_msg = ''
+    if request.method.__eq__('POST'):
+        password = request.form.get('password')
+        confirm = request.form.get('confirm')
 
+        if not password.__eq__(confirm):
+            err_msg = 'Mật khẩu không khớp!!!'
+        else:
+            data = request.form.copy()
+
+            del data['confirm']
+            dao.add_user(**data)
+            return redirect('/login')
+
+    return render_template('layout/register.html', err_msg=err_msg)
+
+@app.route("/login")
+def login_view():
+    return render_template('layout/login.html')
 
 if __name__ == "__main__":
     with app.app_context():

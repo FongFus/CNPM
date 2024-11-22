@@ -3,7 +3,13 @@
 {% block content %}
 <h1 class="text-center text-danger mt-1">ĐĂG KÝ NGƯỜI DÙNG</h1>
 
-<form>
+{% if err_msg %}
+<div class="alert alert-danger">
+    {{ err_msg }}
+</div>
+{% endif %}
+
+<form method="post" action="/register">
     <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" id="name" placeholder="Họ tên" name="name">
         <label for="name">Họ tên</label>
@@ -25,7 +31,7 @@
         <label for="avatar">Ảnh đại diện</label>
     </div>
     <div class="form-floating mb-3 mt-3">
-        <but type="submit" class="btn btn-success">Đăng ký</but>
+        <button type="submit" class="btn btn-success">Đăng ký</button>
     </div>
 </form>
 {% endblock %}
