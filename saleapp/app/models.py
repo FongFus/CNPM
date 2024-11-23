@@ -3,19 +3,23 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, Enum
 from app import db, app
 import hashlib
 from enum import Enum as RoleEnum
+from flask_login import UserMixin
+
 
 class UserRole(RoleEnum):
-    ADMIN=1
-    USER=2
+    ADMIN = 1
+    USER = 2
 
-class User(db.Model):
+
+class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name= Column(String(100), nullable=False)
-    username= Column(String(100), nullable=False, unique=True)
+    name = Column(String(100), nullable=False)
+    username = Column(String(100), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
-    avatar= Column(String(100), nullable=False)
+    avatar = Column(String(100), nullable=False)
     active = Column(Boolean, default=True)
     user_role = Column(Enum(UserRole), default=UserRole.USER)
+
 
 class Category(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)

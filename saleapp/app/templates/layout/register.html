@@ -9,7 +9,7 @@
 </div>
 {% endif %}
 
-<form method="post" action="/register">
+<form method="post" action="/register" enctype="multipart/form-data">
     <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" id="name" placeholder="Họ tên" name="name">
         <label for="name">Họ tên</label>
@@ -27,7 +27,7 @@
         <label for="confirm">Xác nhận mật khẩu</label>
     </div>
     <div class="form-floating mb-3 mt-3">
-        <input type="file" accept=".png .jpg" class="form-control" id="avatar" placeholder="Ảnh đại diện" name="avatar">
+        <input type="file" accept="image/png, image/jpeg" class="form-control" id="avatar" placeholder="Ảnh đại diện" name="avatar">
         <label for="avatar">Ảnh đại diện</label>
     </div>
     <div class="form-floating mb-3 mt-3">
