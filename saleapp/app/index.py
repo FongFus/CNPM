@@ -1,10 +1,11 @@
 # from doctest import debug
 import math
 
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 import dao
 from app import app, login
 from flask_login import login_user, logout_user
+from app.models import UserRole
 
 
 @app.route("/")
@@ -41,7 +42,26 @@ def register_view():
 
     return render_template('layout/register.html', err_msg=err_msg)
 
-@app.route("/login", methods=['get','post'])
+@app.route("/api/carts", methoss=['post'])
+def add_to_cart():
+    cart = session.get('cart')
+    if cart
+    # {
+    #     "1":{
+    #         "id": 1,
+    #         "name": "iphone",
+    #         "price": 123,
+    #         "quantity": 2
+    #     }, "2":{
+    #     "id": 2,
+    #     "name": "iphone",
+    #     "price": 123,
+    #     "quantity": 2
+    # }
+    # }
+
+
+@app.route("/login", methods=['get', 'post'])
 def login_view():
     if request.method.__eq__('POST'):
         username = request.form.get('username')
@@ -53,15 +73,31 @@ def login_view():
 
     return render_template('layout/login.html')
 
+
+@app.route("/login-admin", methods=['post'])
+def login_admin_view():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = dao.auth_user(username=username, password=password, role=UserRole.ADMIN)
+    if user:
+        login_user(user=user)
+    return redirect('/admin')
+
+
 @app.route("/logout")
 def logout_process():
     logout_user()
     return redirect('/login')
 
+
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id)
 
+
 if __name__ == "__main__":
     with app.app_context():
+        from app import admin
+
         app.run(debug=True)

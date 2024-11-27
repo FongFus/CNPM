@@ -51,7 +51,7 @@ source .venv/bin/activate
 ### **3. Cài đặt các thư viện cần thiết**
 Cài đặt các thư viện từ tệp `requirements.txt`:
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 Nếu chưa có tệp `requirements.txt`, cài đặt thủ công các thư viện cần thiết:
